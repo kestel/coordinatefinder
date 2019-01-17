@@ -38,16 +38,16 @@ bot = CoordParserBot(bot_token)
 
 
 @bot.message_handler(commands=['help'])
-def show_help():
+def show_help(message):
     help_text = """Бот умеет доставать координаты из текста. Понимает форварды.\n
     Если в тексте нашёл две координаты - считает между ними расстояние и пишет время софтбана по таблице (/softban).\n
     Если нашёл только одну координату или три и больше - выводит их все в пригодном для копипаста виде.
     Понимает команды только в личку"""
-    return help_text
+    bot.reply_to(message, help_text, parse_mode='Markdown')
 
 
 @bot.message_handler(commands=['softban'])
-def show_softban():
+def show_softban(message):
     softban_table = """`Metric	Time
 1 km        30 sec
 5 km        2 min
@@ -62,7 +62,7 @@ def show_softban():
 750 km	    1.3 hr
 1,000 km    1.5 hr
 1,500 km    2 hr`"""
-    return softban_table
+    bot.reply_to(message, softban_table, parse_mode='Markdown')
 
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
