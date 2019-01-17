@@ -1,1 +1,1 @@
-web: python ./tg_bot.py
+web: python ./tg_bot.py $PORT

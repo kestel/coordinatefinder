@@ -1,13 +1,19 @@
 #!/usr/bin/env python3
 
 import os
+import sys
+from time import sleep
 import telebot
 import softcalc
+import threading
+from bottle import route, run, template, static_file, request
 
 if os.environ.get('TG_BOT_TOKEN') is None:
     raise SystemError("Need provide env TG_BOT_TOKEN")
 else:
     bot_token = os.environ.get("TG_BOT_TOKEN")
+
+web_port = sys.argv[1]
 
 
 class CoordParserBot(telebot.TeleBot):
@@ -37,6 +43,33 @@ def handle_all(message):
     bot.all_message_parser(message)
 
 
+@route("/")
+def web_parse_root():
+    return "Hello World"
+
+
+def run_web():
+    run(host='0.0.0.0', port=web_port, quiet=True)
+
+
+def run_bot_poller():
+    while True:
+        try:
+            bot.remove_webhook()
+            bot.polling(none_stop=True)
+        except Exception as polling_err:
+            sleep(15)
+
+
 if __name__ == "__main__":
-    bot.remove_webhook()
-    bot.polling(none_stop=True)
+    w = threading.Thread(target=run_web, daemon=True)
+    w.name = "WebThread"
+    b = threading.Thread(target=run_bot_poller, daemon=True)
+    b.name = "BotThread"
+    try:
+        w.start()
+        b.start()
+        w.join()
+        b.join()
+    except KeyboardInterrupt:
+        raise SystemExit("CTRL+C pressed, exiting...")
