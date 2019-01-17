@@ -6,7 +6,7 @@ from time import sleep
 import telebot
 import softcalc
 import threading
-from bottle import route, run, template, static_file, request
+from bottle import route, run
 
 if os.environ.get('TG_BOT_TOKEN') is None:
     raise SystemError("Need provide env TG_BOT_TOKEN")
@@ -24,7 +24,7 @@ class CoordParserBot(telebot.TeleBot):
                 text = "`{}`".format(res[0])
             elif len(res) == 2:
                 d, s = softcalc.calc_softban(*res)
-                text = """Coord1: `{}`\nCoord2: `{}`\nDistance: {:.2f}km, Softban: {} min""".format(res[0], res[1], d, 2)
+                text = """Coord1: `{}`\nCoord2: `{}`\nDistance: {:.2f}km, Softban: {} min""".format(res[0], res[1], d, s)
             else:
                 text = ", ".join(["`{}`".format(elem) for elem in res])
             self.reply_to(message=message, text=text, parse_mode='Markdown')
@@ -42,6 +42,19 @@ bot = CoordParserBot(bot_token)
 def handle_all(message):
     bot.all_message_parser(message)
 
+
+@bot.message_handler(commands=['help'])
+def show_help():
+    help_text = """Бот умеет доставать координаты из текста. Понимает форварды.\n
+    Если в тексте нашёл две координаты - считает между ними расстояние и пишет время софтбана по таблице (/softban).\n
+    Если нашёл только одну координату или три и больше - выводит их все в пригодном для копипаста виде.
+    Понимает команды только в личку"""
+    return help_text
+
+
+@bot.message_handler(commands=['softban'])
+def show_softban():
+    softban_table = """"""
 
 @route("/")
 def web_parse_root():

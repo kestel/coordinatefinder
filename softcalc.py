@@ -84,6 +84,8 @@ Join on 26
 Longitude
 -73.989308
 """
+    t3 = """Coord1: 44.41398,8.883844
+Coord2: 40.835965,73.89126"""
     coord_list = coord_finder(t1)
     if len(coord_list) == 2:
         d, s = calc_softban(*coord_list)
@@ -92,6 +94,7 @@ Longitude
     elif len(coord_list) == 1:
         print(coord_list[0])
     print(coord_finder(t2))
+    print(calc_softban(*coord_finder(t3)))
     coords_1 = (35.698610, 139.700667)
     coords_2 = (35.633132, 139.534768)
 
