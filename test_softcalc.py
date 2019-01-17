@@ -44,3 +44,5 @@ Coords : 25.048323,121.517228"""
         self.assertEqual(coord_list[0], "25.005743,121.519298")
         self.assertEqual(coord_list[1], "24.992623,121.548795")
         self.assertEqual(coord_list[2], "25.048323,121.517228")
+
+    # TODO сделать тесты для отрицательных координат

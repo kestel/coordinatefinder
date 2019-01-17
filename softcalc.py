@@ -50,10 +50,11 @@ def coord_finder(text: str):
     :param text:
     :return:
     """
-    search = re.findall('(?P<lat1>\d{1,3}[,.]\d{3,})\D*(?P<long1>\d{1,3}[,.]\d{3,})', text)
+    search = re.findall('(?P<lat1>-?\d{1,3}[,.]\d{3,})[,. ]+(?P<long1>-?\d{1,3}[,.]\d{3,})', text)
 
     r = []
     for elem in search:
+        # print(elem)
         if isinstance(elem, tuple):
             r.append(",".join(elem))
     return r
@@ -86,18 +87,22 @@ Longitude
 """
     t3 = """Coord1: 44.41398,8.883844
 Coord2: 40.835965,73.89126"""
-    coord_list = coord_finder(t1)
-    if len(coord_list) == 2:
-        d, s = calc_softban(*coord_list)
-        print("D2: {}".format(d))
-        print("S2: {}".format(s))
-    elif len(coord_list) == 1:
-        print(coord_list[0])
-    print(coord_finder(t2))
-    print(calc_softban(*coord_finder(t3)))
-    coords_1 = (35.698610, 139.700667)
-    coords_2 = (35.633132, 139.534768)
+    t4 = """Coord1: -44.41398,8.883844
+Coord2: 40.835965,-73.89126"""
+    t5 = """19.431324, -99.427927, 40.835965,73.89126"""
+    # coord_list = coord_finder(t1)
+    # if len(coord_list) == 2:
+    #    d, s = calc_softban(*coord_list)
+    #    print("D2: {}".format(d))
+    #    print("S2: {}".format(s))
+    #elif len(coord_list) == 1:
+    #    print(coord_list[0])
+    # print(coord_finder(t2))
+    print(coord_finder(t5))
+    print(calc_softban(*coord_finder(t5)))
+    #coords_1 = (35.698610, 139.700667)
+    #coords_2 = (35.633132, 139.534768)
 
-    d, s = calc_softban(coords_1, coords_2)
-    print("Distance: {}".format(d))
-    print("Softban: {}".format(s))
+    #d, s = calc_softban(coords_1, coords_2)
+    #print("Distance: {}".format(d))
+    #print("Softban: {}".format(s))

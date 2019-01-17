@@ -48,7 +48,8 @@ def show_help(message):
 
 @bot.message_handler(commands=['softban'])
 def show_softban(message):
-    softban_table = """`Metric      Time
+    softban_table = """Таблица, по которой считается софтбан\n
+`Metric      Time
 1 km        30 sec
 5 km        2 min
 10 km       6 min
