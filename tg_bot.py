@@ -29,18 +29,12 @@ class CoordParserBot(telebot.TeleBot):
                 text = ", ".join(["`{}`".format(elem) for elem in res])
             self.reply_to(message=message, text=text, parse_mode='Markdown')
             # print("Result: {}".format(res))
-            # print("Text: {}".format(text))
+            print("Text: {}".format(text))
         else:
-            pass
-            # print(message.text)
+            print("Else in message: {}".format(message.text))
 
 
 bot = CoordParserBot(bot_token)
-
-
-@bot.message_handler(func=lambda message: True, content_types=['text'])
-def handle_all(message):
-    bot.all_message_parser(message)
 
 
 @bot.message_handler(commands=['help'])
@@ -54,7 +48,27 @@ def show_help():
 
 @bot.message_handler(commands=['softban'])
 def show_softban():
-    softban_table = """"""
+    softban_table = """`Metric	Time
+1 km        30 sec
+5 km        2 min
+10 km       6 min
+25 km       11 min
+30 km       14 min
+65 km       22 min
+81 km       25 min
+100 km      35 min
+250 km      45 min
+500 km      1 hr
+750 km	    1.3 hr
+1,000 km    1.5 hr
+1,500 km    2 hr`"""
+    return softban_table
+
+
+@bot.message_handler(func=lambda message: True, content_types=['text'])
+def handle_all(message):
+    bot.all_message_parser(message)
+
 
 @route("/")
 def web_parse_root():
