@@ -50,7 +50,7 @@ def coord_finder(text: str):
     :param text:
     :return:
     """
-    search = re.findall('(?P<lat1>-?\d{1,3}[,.]\d{3,})[,. ]+(?P<long1>-?\d{1,3}[,.]\d{3,})', text)
+    search = re.findall('(?P<lat1>-?\d{1,3}[,.]\d{3,})[a-zA-Z,. \n]+(?P<long1>-?\d{1,3}[,.]\d{3,})', text)
 
     r = []
     for elem in search:
@@ -61,48 +61,12 @@ def coord_finder(text: str):
 
 
 if __name__ == '__main__':
-    t1 = """100iv & raid by Pokémon Go Fly Italy, [17.01.19 09:30]
-Groudon Raid No.10 #ChainRaids (https://twitt
-Taipei 🇹🇼
-
-Coords : 25.025553,121.56185
-
-Current Time 24 min
-Join on 22
-
-
-100iv & raid by Pokémon Go Fly Italy, [17.01.19 09:33]
-Groudon Raid No.11#ChainRaids (https://twitter.com/hashtaref_src=twsrc%5Etfw)
-Taipei 🇹🇼
-
-Coords : 25.027401,121.533104
-
-Current Time 28 min
-Join on 26
-8?ref_src=twsrc%5Etfw)"""
-    t2 = """Latitude
-40.741895
-Longitude
--73.989308
-"""
     t3 = """Coord1: 44.41398,8.883844
 Coord2: 40.835965,73.89126"""
     t4 = """Coord1: -44.41398,8.883844
 Coord2: 40.835965,-73.89126"""
     t5 = """19.431324, -99.427927, 40.835965,73.89126"""
-    # coord_list = coord_finder(t1)
-    # if len(coord_list) == 2:
-    #    d, s = calc_softban(*coord_list)
-    #    print("D2: {}".format(d))
-    #    print("S2: {}".format(s))
-    #elif len(coord_list) == 1:
-    #    print(coord_list[0])
-    # print(coord_finder(t2))
+    print(coord_finder(t3))
+    print(coord_finder(t4))
     print(coord_finder(t5))
     print(calc_softban(*coord_finder(t5)))
-    #coords_1 = (35.698610, 139.700667)
-    #coords_2 = (35.633132, 139.534768)
-
-    #d, s = calc_softban(coords_1, coords_2)
-    #print("Distance: {}".format(d))
-    #print("Softban: {}".format(s))
